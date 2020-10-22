@@ -88,7 +88,7 @@
    89  sort -n -t ':' -k1 /etc/passwd | tr ":" " " | awk '{ print $1 $7 }'
    90  yum install -y git
    91  cd /usr/share/doc/git-*
-   92  apt-get install git
+   92  sudo apt install git
    93  cd /usr/share/doc/git-*
    94  cat user-manual.txt | tr ' ' '\012' | tr '[:upper:]' '[:lower:]' | tr -d
    95  ls
