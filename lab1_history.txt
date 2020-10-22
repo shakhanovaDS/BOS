@@ -1,0 +1,109 @@
+    1  ls
+    3  whoami
+    4  whoaim
+    5  whoami
+    6  echo 'hello world'
+    7  date
+    8  cal
+    9  man cal
+   10  cal -3
+   11  history
+   12  clear
+   13  pwd
+   14  cd /
+   15  cd ..
+   16  pwd
+   17  1s
+   18  ls
+   19  ls /var
+   20  cd ~
+   21  cd ..
+   22  pwd
+   23  ls
+   24  ls /dasha
+   25  ls
+   26  ls -l
+   27  cd
+   28  pwd
+   29  mkdir fruits
+   30  cd /
+   31  pwd
+   32  mkdir ~/animals
+   33  touch /tmp/temp
+   34  cd /fruits
+   35  cd ~/fruits
+   36  pwd
+   37  touch apple banana pineaple lion
+   38  touch /animals/cat.txt dog.txt elephant.txt
+   39  touch cat.txt dog.txt elephant.txt ../animals
+   40  date apple
+   41  ls
+   42  ls -l
+   43  ls -l apple
+   44  ls b*
+   45  ls a*
+   46* ls -l 
+   47  ls [bi]*
+   48  cp /etc/passwd ~
+   49  cat /etc/issue
+   50  cp /etc/issue apple
+   51  cat apple
+   52  mv lion ~/animals
+   53  man rm
+   54  man mv
+   55  mv pineaple pineapple
+   56  man wc
+   57  wc -l
+   58  wc -l /etc/passwd
+   59  cd
+   60  pwd
+   61  ln -s /etc/passwd passwd_link
+   62* ln ~/
+   63  ls -l ~
+   64  ls -l ~/.bash_history 
+   65  ls -gl ~/.bash_history 
+   66  rm fruits/apple
+   67  mkdir rmme
+   68  rmdir rmme
+   69  rmdir fruit
+   70  rmdir fruits
+   71  rm -fr fruits
+   72  cat /etc/passwd /var/log/boot.log
+   73  cp /etc/init.d/ ~
+   74  cp -r /etc/init.d/ ~
+   75  rm -fr init.d
+   76  cut -d: -f1 /etc/passwd | sort
+   77  cut -d: -f1,3,4 /etc/passwd | column -ts: | less
+   78  cut -d: -f1,2,3,4 /etc/passwd | column -ts: | less
+   79  grep :/bin/bash /etc/passwd | wc -l
+   80  grep :/bin/bash /etc/passwd | cut -d: -f1 | sort -r
+   81  rpm -qa --qf '%{NAME}: %{SIZE}\n' | sort -rn -k2,2 | head -n 25
+   82  rpm -ql man-db | xargs -l du    2> /dev/null  | sort -n
+   83  top -b -n1
+   84  top -b -n1 | sort -n -k 3
+   85  top -b -n1 | tail -n+8 | cut -c7-  | tr -s ' ' '\t' | cut -f11,5
+   86  sort -n -t ':' -k1 /etc/passwd | tr ":" " "
+   87  sort -n -t ':' -k1 /etc/passwd | tr ":" " " | cut -f1,7
+   88  sort -n -t ':' -k1
+   89  sort -n -t ':' -k1 /etc/passwd | tr ":" " " | awk '{ print $1 $7 }'
+   90  yum install -y git
+   91  cd /usr/share/doc/git-*
+   92  apt-get install git
+   93  cd /usr/share/doc/git-*
+   94  cat user-manual.txt | tr ' ' '\012' | tr '[:upper:]' '[:lower:]' | tr -d
+   95  ls
+   96  cat user-manual.txt | tr -cs '[:alpha:]' '\n' | tr '[:upper:]' '[:lower:]' | sort | uniq -c | sort -rn | head -5
+   97  tr '[:lower:]' '[:upper:]' < user-manual.txt |  tr -d '[:punct:] \n\t' | fold -w1 | sort | uniq -c | sort -rn | head -5
+   98  tr -cs '[:alpha:]' '\n' < user-manual.txt | less | grep -E ........ | sort | uniq -c | sort -rn | head
+   99  cd
+  100  ping ya.ru
+  101  curl wttr.in
+  102  hostname -I
+  103  curl ifconfig.me
+  104  id
+  105  whoami
+  106  sudo id
+  107  sudo less /var/log/messages
+  108  less /var/log/messages
+  109  su
+  110  history > lab1_history.txt
