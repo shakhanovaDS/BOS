@@ -1,0 +1,55 @@
+  
+.:
+итого 12
+d---rwxr-x 2 dasha dasha 4096 окт 20 16:04 dir
+-rw-rwx--- 1 dasha dasha    5 окт 20 16:01 file
+-rw------- 1 dasha dasha    0 окт 20 16:13 file1
+-rw-rw-rw- 1 dasha dasha    0 окт 20 16:18 file2
+-rw-rw-r-- 1 dasha dasha    0 окт 20 16:03 new_file
+ls: невозможно открыть каталог './dir': Отказано в доступе
+  
+------------------------------------------------------------------------------------------  
+  
+  
+  1   mkdir test
+  2   ls
+  3   cd test
+  4   touch file
+  5   man chmod
+  6   chmod ugo-rwx
+  7   chmod ugo-rwx file
+  8   echo "test" > file
+  9   cat file
+  10  chmod u+w file
+  11  ll
+  12  echo "test" > file
+  13  cat file
+  14  chmod u+r
+  15  chmod u+r file
+  16  ls -l
+  17  chmod ug+r file
+  18  ll
+  19  cat file
+  20  mkdir dir
+  21  touch new_file /dir/
+  22  touch new_file dir/
+  23  ls -r
+  24  ls dir/
+  25  delete 1
+  26  echo "file 2" dir/new_file
+  27  echo "file 2" > dir/new_file
+  28  chmod u-rwx
+  29  chmod u-rwx dir
+  30  ll
+  31  cat dir/new_file
+  32  chown --help
+  33  chown root file
+  34  umask --help
+  35  umask 077
+  36  touch file2
+  37  ll
+  38  umask 0000
+  39  mv file2 file1
+  40  touch file2
+  41  ll
+  42  cat file
