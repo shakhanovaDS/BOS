@@ -1,0 +1,160 @@
+dasha@dasha-VirtualBox:~$ ls -l /dev/sda{,[123]}
+brw-rw---- 1 root disk 8, 0 дек 18 13:08 /dev/sda
+brw-rw---- 1 root disk 8, 1 дек 18 13:08 /dev/sda1
+brw-rw---- 1 root disk 8, 2 дек 18 13:08 /dev/sda2
+dasha@dasha-VirtualBox:~$ cat /proc/diskstats
+   7       0 loop0 45 0 676 627 0 0 0 0 0 108 584 0 0 0 0
+   7       1 loop1 60 0 2126 1982 0 0 0 0 0 124 1896 0 0 0 0
+   7       2 loop2 59 0 2144 1783 0 0 0 0 0 124 1724 0 0 0 0
+   7       3 loop3 52 0 696 1261 0 0 0 0 0 136 1200 0 0 0 0
+   7       4 loop4 45 0 682 837 0 0 0 0 0 112 768 0 0 0 0
+   7       5 loop5 60 0 2116 1373 0 0 0 0 0 132 1288 0 0 0 0
+   7       6 loop6 10573 0 21732 80506 0 0 0 0 0 1392 78004 0 0 0 0
+   7       7 loop7 55 0 702 1130 0 0 0 0 0 128 1056 0 0 0 0
+  11       0 sr0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+   8       0 sda 21583 8539 1928230 367239 18818 19570 668890 242735 0 61952 570788 0 0 0 0
+   8       1 sda1 154 23 11424 683 2 0 2 0 0 272 524 0 0 0 0
+   8       2 sda2 2 0 4 37 0 0 0 0 0 16 32 0 0 0 0
+   8       5 sda5 21354 8516 1913562 365728 18672 19570 668888 235507 0 61680 562556 0 0 0 0
+   7       8 loop8 46 0 684 1056 0 0 0 0 0 128 996 0 0 0 0
+   7       9 loop9 44 0 674 948 0 0 0 0 0 108 908 0 0 0 0
+   7      10 loop10 4 0 8 1 0 0 0 0 0 4 0 0 0 0 0
+dasha@dasha-VirtualBox:~$ cat /proc/devices
+Character devices:
+  1 mem
+  4 /dev/vc/0
+  4 tty
+  4 ttyS
+  5 /dev/tty
+  5 /dev/console
+  5 /dev/ptmx
+  5 ttyprintk
+  6 lp
+  7 vcs
+ 10 misc
+ 13 input
+ 21 sg
+ 29 fb
+ 89 i2c
+ 99 ppdev
+108 ppp
+116 alsa
+128 ptm
+136 pts
+180 usb
+189 usb_device
+204 ttyMAX
+226 drm
+241 aux
+242 hidraw
+243 vfio
+244 bsg
+245 watchdog
+246 ptp
+247 pps
+248 cec
+249 rtc
+250 dax
+251 dimmctl
+252 ndctl
+253 tpm
+254 gpiochip
+
+Block devices:
+  7 loop
+  8 sd
+  9 md
+ 11 sr
+ 65 sd
+ 66 sd
+ 67 sd
+ 68 sd
+ 69 sd
+ 70 sd
+ 71 sd
+128 sd
+129 sd
+130 sd
+131 sd
+132 sd
+133 sd
+134 sd
+135 sd
+253 device-mapper
+254 mdp
+259 blkext
+dasha@dasha-VirtualBox:~$ dd if=/dev/zero of=./fs.img bs=1M count=10
+10+0 records in
+10+0 records out
+10485760 bytes (10 MB, 10 MiB) copied, 0,00679866 s, 1,5 GB/s
+dasha@dasha-VirtualBox:~$ sudo losetup --find --show ./fs.img
+[sudo] password for dasha: 
+/dev/loop10
+dasha@dasha-VirtualBox:~$ sudo mkfs -t ext4 /dev/loop10
+mke2fs 1.45.5 (07-Jan-2020)
+Creating filesystem with 2560 4k blocks and 2560 inodes
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+dasha@dasha-VirtualBox:~$ sudo -i
+root@dasha-VirtualBox:~# blkid /dev/loop10
+/dev/loop10: UUID="8cadb0f3-082e-4b24-a84f-6deb014faf91" BLOCK_SIZE="1024" TYPE="ext4"
+root@dasha-VirtualBox:~# mount /dev/loop10 /mnt
+root@dasha-VirtualBox:~# mount | grep /mnt
+/var/lib/snapd/snaps/core18_1932.snap on /mnt type squashfs (ro,relatime)
+/dev/loop10 on /mnt type ext4 (rw,relatime)
+root@dasha-VirtualBox:~# df -h /mnt
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/loop10     5,7M   28K  5,0M   1% /mnt
+root@dasha-VirtualBox:~# umount /dev/loop10
+root@dasha-VirtualBox:~# tune2fs -l /dev/loop10
+tune2fs 1.45.5 (07-Jan-2020)
+Filesystem volume name:   <none>
+Last mounted on:          <not available>
+Filesystem UUID:          8cadb0f3-082e-4b24-a84f-6deb014faf91
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype extent 64bit flex_bg sparse_super large_file huge_file dir_nlink extra_isize metadata_csum
+Filesystem flags:         signed_directory_hash 
+Default mount options:    user_xattr acl
+Filesystem state:         clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              2560
+Block count:              2560
+Reserved block count:     128
+Free blocks:              1445
+Free inodes:              2549
+First block:              0
+Block size:               4096
+Fragment size:            4096
+Group descriptor size:    64
+Reserved GDT blocks:      1
+Blocks per group:         32768
+Fragments per group:      32768
+Inodes per group:         2560
+Inode blocks per group:   80
+Flex block group size:    16
+Filesystem created:       Fri Dec 18 15:26:25 2020
+Last mount time:          Fri Dec 18 15:35:53 2020
+Last write time:          Fri Dec 18 15:37:42 2020
+Mount count:              1
+Maximum mount count:      -1
+Last checked:             Fri Dec 18 15:26:25 2020
+Check interval:           0 (<none>)
+Lifetime writes:          365 kB
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+First inode:              11
+Inode size:	          128
+Journal inode:            8
+Default directory hash:   half_md4
+Directory Hash Seed:      289e91e1-02c5-482a-8596-7ce8fc8b2da6
+Journal backup:           inode blocks
+Checksum type:            crc32c
+Checksum:                 0xa5b3afdf
+root@dasha-VirtualBox:~# losetup --detach /dev/loop0
+root@dasha-VirtualBox:~# losetup --list
